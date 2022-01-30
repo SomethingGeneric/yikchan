@@ -1,0 +1,12 @@
+<!--
+    This template is used by the post engine,
+    and gets filled out with the content of the post.
+    we say 'safe' just because we insert the datestamp
+    using other html tags.
+
+    Not to worry, user input for a post is stripped of HTML
+    to make sure that (hopefully) no one can inject malicious stuff.
+-->
+<blockquote>
+{{content|safe}}
+</blockquote>

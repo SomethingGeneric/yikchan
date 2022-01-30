@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+  This is the template that contains other templates.
+  The tagline and 'page' are the only things allowed to contain HTML,
+  as denoted by the 'safe' keyword. below
+
+  For anyone inspecting the site from the browser, you might think I'm crazy.
+  But I'm not. In the source code, you can see the flask variables i'm talking
+  about above.
+-->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{{product}}: {{title}}</title>
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+
+  <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+  <link rel="stylesheet" href="https://newcss.net/theme/terminal.css">
+  <link rel="stylesheet" href="/static/overrides.css">
+</head>
+
+<body>
+  <header>
+    <h1><a href="/" class="unlink">{{product}}</a>: {{title}}</h1>
+  </header>
+  <p>{{tagline|safe}}</p>
+  {{page|safe}}
+  <br />
+  <script src="/static/script.js"></script>
+</body>
+
+</html>

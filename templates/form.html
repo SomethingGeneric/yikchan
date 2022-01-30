@@ -1,0 +1,16 @@
+<!-- Anything here will be served up in the main template on the index page, and on replies to a thread -->
+<script>
+    // This will be set when the page is served.
+    var postid = "{{next_post_id}}";
+</script>
+<form method="POST">
+    <!-- Form title is usually 'Thread X' or 'New Thread', on the main page -->
+    <h3>{{form_title}}</h3>
+    <h4>You should review the posting rules <a class="unlink" href="/rules">here.</a></h4>
+    <p>
+        <label>Speak!</label>
+        <br/>
+        <textarea cols=100 rows=4 name="post-raw" id="post-raw"></textarea>
+    </p>
+    <button type="submit">Post</button>
+</form>

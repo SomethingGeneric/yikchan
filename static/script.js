@@ -1,0 +1,3 @@
+function doPost() {
+    alert(postid);
+}

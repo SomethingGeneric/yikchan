@@ -1,0 +1,9 @@
+[Unit]
+Description=YikChan Service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/gunicorn --chdir PATH --workers=8 --bind=0.0.0.0 app:app
+
+[Install]
+WantedBy=multi-user.target
