@@ -3,9 +3,11 @@ bucknell.wtf sourcecode
 
 ## deployment
 * edit the big ol' block at the top of `app.py` to suit your needs
+    * if you use the `yikchan.service`, the port is always `8000`
 * check and tweak any of the files under `static` and `templates` as desired
     * In HTML templates, `{{variables}}` are used to insert data from Python code. You can of course edit the surrounding tags, but the underlying data comes from the Flask app. (which is very simple, so you could of course tweak it too.)
 * run `python3 app.py` (or gunicorn w/ some proxy if you're doing production. i'm not your mom, i won't judge)
+    * You could use `make deploy` to automate above and also copy the example `yikchan.service` automatically.
 
 ## sources
 * https://stackoverflow.com/a/925630 - for stripping HTML
