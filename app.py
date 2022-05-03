@@ -12,7 +12,7 @@ if os.path.exists(".use_theme"):
     with open(".use_theme") as f:
         settings_fn = f.read().strip()
 else:
-    if sys.argv[1] == "":
+    if len(sys.argv) == 1:
         settings_fn = "default.config"
     else:
         settings_fn = sys.argv[1]
@@ -22,6 +22,7 @@ settings = settingsloader(settings_fn)
 PRODUCT = settings.settings["PRODUCT"]
 TAGLINE = settings.settings["TAGLINE"]
 TZ_STRING = settings.settings["TZ_STRING"]
+DO_CENSOR = settings.settings["DO_CENSOR"]
 
 ###############################################################################
 #                                                                             #
@@ -48,7 +49,7 @@ with open("static/terminal.css", "w") as f:
     f.write(css)
 
 app = Flask(__name__)
-pm = postlib(POST_DIR, TZ_STRING)
+pm = postlib(POST_DIR, TZ_STRING, DO_CENSOR)
 
 
 @app.route("/post/<pid>", methods=["GET", "POST"])

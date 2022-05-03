@@ -6,6 +6,10 @@ from html.parser import HTMLParser
 
 # PyPi
 from flask import render_template
+from better_profanity import profanity
+
+# Custom
+from config import settingsloader
 
 s = os.sep
 
@@ -13,6 +17,7 @@ if s != "/":
     print("We only do *nix here.")
     sys.exit(1)
 
+profanity.load_censor_words_from_file("profanity_wordlist.txt")
 
 def checkp(p):
     if not os.path.exists(p):
@@ -48,7 +53,14 @@ def strip_tags(html):
 
 
 class postlib:
-    def __init__(self, root, tzstr):
+    def __init__(self, root, tzstr, dc):
+
+        self.do_censor = False
+        if dc == "yes":
+            self.do_censor = True
+
+        print("Censoring is " + str(self.do_censor))
+
         self.root = root
         self.tzstr = tzstr
 
@@ -61,9 +73,18 @@ class postlib:
 
     def mkpost(self, pid, text):
 
+        print("MAKING POST")
+        print("Text: '" + text + "'")
+
         for thing in self.block:
             if thing in text:
                 return (False, "Found restricted word: " + thing)
+
+        if self.do_censor:
+            print("Censoring is enabled, checking")
+            if profanity.contains_profanity(str(text)):
+                print("Filter found bad things")
+                return (False, "Profanity filter said: '" + profanity.censor(text, "*") + "'")
 
         pid = str(pid)  # flask might int-ify it
 
