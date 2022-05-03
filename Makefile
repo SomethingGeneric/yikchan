@@ -13,6 +13,7 @@ undeploy:
 	sudo systemctl disable yikchan.service
 	sudo rm /etc/systemd/system/yikchan.service
 	sudo systemctl daemon-reload
+	rm .use_theme
 update: pip undeploy
 	git pull
 	make deploy

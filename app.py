@@ -8,10 +8,14 @@ from flask import *
 from postlib import postlib
 from config import settingsloader
 
-if sys.argv[1] == "":
-    settings_fn = "default.config"
+if os.path.exists(".use_theme"):
+    with open(".use_theme") as f:
+        settings_fn = f.read().strip()
 else:
-    settings_fn = sys.argv[1]
+    if sys.argv[1] == "":
+        settings_fn = "default.config"
+    else:
+        settings_fn = sys.argv[1]
 
 settings = settingsloader(settings_fn)
 

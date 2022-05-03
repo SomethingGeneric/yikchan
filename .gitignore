@@ -3,6 +3,7 @@ posts/
 new.service
 *.config
 !default.config
+.use_theme
 
 # ---> Python
 # Byte-compiled / optimized / DLL files
