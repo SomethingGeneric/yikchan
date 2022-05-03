@@ -10,9 +10,7 @@ from flask import render_template
 s = os.sep
 
 if s != "/":
-    print(
-        "We only do *nix here."
-    )
+    print("We only do *nix here.")
     sys.exit(1)
 
 
@@ -56,8 +54,10 @@ class postlib:
 
         ensuredir(self.root)
 
-        with open("forbidden.txt") as f:
-            self.block = f.read().split("\n")
+        self.block = []
+        if os.path.exists("forbidden.txt"):
+            with open("forbidden.txt") as f:
+                self.block = f.read().split("\n")
 
     def mkpost(self, pid, text):
 

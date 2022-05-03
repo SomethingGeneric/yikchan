@@ -1,5 +1,5 @@
 # Stdlib
-import sys,os
+import sys, os
 
 # PyPi
 from flask import *
@@ -19,9 +19,9 @@ else:
 
 settings = settingsloader(settings_fn)
 
-PRODUCT = settings.settings['PRODUCT']
-TAGLINE = settings.settings['TAGLINE']
-TZ_STRING = settings.settings['TZ_STRING']
+PRODUCT = settings.settings["PRODUCT"]
+TAGLINE = settings.settings["TAGLINE"]
+TZ_STRING = settings.settings["TZ_STRING"]
 
 ###############################################################################
 #                                                                             #
@@ -50,6 +50,7 @@ with open("static/terminal.css", "w") as f:
 app = Flask(__name__)
 pm = postlib(POST_DIR, TZ_STRING)
 
+
 @app.route("/post/<pid>", methods=["GET", "POST"])
 def post(pid):
     if request.method == "POST":
@@ -62,7 +63,7 @@ def post(pid):
                 product=PRODUCT,
                 title="Error making post",
                 tagline="Couldn't make your post because: <code>" + msg + "</code>",
-                page="<p>You may want to review the <a href='/rules'>rules</a>.</p>"
+                page="<p>You may want to review the <a href='/rules'>rules</a>.</p>",
             )
     else:
         return render_template(
@@ -116,7 +117,7 @@ def index():
                 product=PRODUCT,
                 title="Error making post",
                 tagline="Couldn't make your post because: <code>" + msg + "</code>",
-                page="<p>You may want to review the <a href='/rules'>rules</a>.</p>"
+                page="<p>You may want to review the <a href='/rules'>rules</a>.</p>",
             )
     else:
         return render_template(

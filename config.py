@@ -1,4 +1,5 @@
-import os,sys
+import os, sys
+
 
 class settingsloader:
     def __init__(self, fn):
@@ -15,4 +16,4 @@ class settingsloader:
                         stuff = line.split("=")
                         key = stuff[0]
                         val = stuff[1]
-                        self.settings[key] = val.replace("\"","")
+                        self.settings[key] = val.replace('"', "")
