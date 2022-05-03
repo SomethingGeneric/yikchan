@@ -14,6 +14,7 @@ undeploy:
 	sudo rm /etc/systemd/system/yikchan.service
 	sudo systemctl daemon-reload
 	rm .use_theme
-update: pip undeploy
+update:
+	make undeploy
 	git pull
 	make deploy
