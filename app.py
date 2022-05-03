@@ -29,12 +29,19 @@ DEBUG = True
 app = Flask(__name__)
 pm = postlib(POST_DIR, TZ_STRING)
 
-
 @app.route("/post/<pid>", methods=["GET", "POST"])
 def post(pid):
     if request.method == "POST":
-        pm.mkpost(pid, request.form["post-raw"])
-        return redirect("/post/" + pid)
+        status, msg = pm.mkpost(pid, request.form["post-raw"])
+        if status == True:
+            return redirect("/post/" + pid)
+        else:
+            return render_template(
+                "page.html",
+                product=PRODUCT,
+                title="Error making post",
+                tagline="Couldn't make your post because: <code>" + msg + "</code>. You may want to review the rules."
+            )
     else:
         return render_template(
             "page.html",
@@ -78,8 +85,16 @@ def rulepg():
 def index():
     if request.method == "POST":
         pid = str(pm.mkpostid())
-        pm.mkpost(pid, request.form["post-raw"])
-        return redirect("/post/" + pid)
+        status, msg = pm.mkpost(pid, request.form["post-raw"])
+        if status == True:
+            return redirect("/post/" + pid)
+        else:
+            return render_template(
+                "page.html",
+                product=PRODUCT,
+                title="Error making post",
+                tagline="Couldn't make your post because: <code>" + msg + "</code>"
+            )
     else:
         return render_template(
             "page.html",

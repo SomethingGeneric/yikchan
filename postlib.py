@@ -56,7 +56,15 @@ class postlib:
 
         ensuredir(self.root)
 
+        with open("forbidden.txt") as f:
+            self.block = f.read().split("\n")
+
     def mkpost(self, pid, text):
+
+        for thing in self.block:
+            if thing in text:
+                return (False, "Found restricted word: " + thing)
+
         pid = str(pid)  # flask might int-ify it
 
         # strip dangerous tags
@@ -74,6 +82,8 @@ class postlib:
             print("Post already exists, appending. id: " + pid)
             with open(self.root + s + pid, "a") as f:
                 f.write("--REPLY--\n" + text + "\n")
+
+        return (True, "")
 
     def getpost(self, pid):
         pid = str(pid)
