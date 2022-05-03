@@ -13,7 +13,7 @@ from postlib import postlib
 PRODUCT = "bucknell.wtf"
 TAGLINE = "the true voice of bucknell (maybe? i'm no scientist)"
 # the code automatically uses your local timezone, this is just appended to the output of that
-TZ_STRING = "ETC"
+TZ_STRING = "UTC"
 
 # Data
 POST_DIR = "posts"
