@@ -1,0 +1,16 @@
+@import url("https://fonts.xz.style/serve/fira-code.css");
+
+:root {
+	--nc-font-sans: 'Fira Code', monospace;
+	--nc-font-mono: 'Fira Code', monospace;
+	--nc-tx-1: #FFFFFF;
+	--nc-tx-2: #EEEEEE;
+	--nc-bg-1: #000000;
+	--nc-bg-2: BG_2;
+	--nc-bg-3: BG_3;
+	--nc-lk-1: LK_1;
+	--nc-lk-2: LK_2;
+	--nc-lk-tx: #000000;
+	--nc-ac-1: AC_1;
+	--nc-ac-tx: #000000;
+}

@@ -11,7 +11,7 @@ s = os.sep
 
 if s != "/":
     print(
-        "We only do *nix here, sir\n(or ma'am or them/they (or ze/zir (uhhhhh i'm out of the loop)))"
+        "We only do *nix here."
     )
     sys.exit(1)
 

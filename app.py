@@ -1,20 +1,26 @@
 # Stdlib
-# (none yet)
+import sys,os
 
 # PyPi
 from flask import *
 
 # This project
 from postlib import postlib
+from config import settingsloader
+
+if sys.argv[1] == "":
+    settings_fn = "default.config"
+else:
+    settings_fn = sys.argv[1]
+
+settings = settingsloader(settings_fn)
+
+PRODUCT = settings.settings['PRODUCT']
+TAGLINE = settings.settings['TAGLINE']
+TZ_STRING = settings.settings['TZ_STRING']
 
 ###############################################################################
 #                                                                             #
-# Visible to end user
-PRODUCT = "bucknell.wtf"
-TAGLINE = "the true voice of bucknell (maybe? i'm no scientist)"
-# the code automatically uses your local timezone, this is just appended to the output of that
-TZ_STRING = "UTC"
-
 # Data
 POST_DIR = "posts"
 
@@ -22,9 +28,20 @@ POST_DIR = "posts"
 PORT = 8080
 HOST = "0.0.0.0"
 DEBUG = True
-
 #                                                                             #
 ###############################################################################
+
+if os.path.exists("static/terminal.css"):
+    os.remove("static/terminal.css")
+
+with open("static/terminal_def.css") as f:
+    css = f.read()
+
+for color in ["BG_2", "BG_3", "LK_1", "LK_2", "AC_1"]:
+    css = css.replace(color, settings.settings[color])
+
+with open("static/terminal.css", "w") as f:
+    f.write(css)
 
 app = Flask(__name__)
 pm = postlib(POST_DIR, TZ_STRING)

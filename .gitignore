@@ -1,6 +1,8 @@
 # yakchan
 posts/
 new.service
+*.config
+!default.config
 
 # ---> Python
 # Byte-compiled / optimized / DLL files
