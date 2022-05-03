@@ -40,7 +40,7 @@ def post(pid):
                 "page.html",
                 product=PRODUCT,
                 title="Error making post",
-                tagline="Couldn't make your post because: <code>" + msg + "</code>"
+                tagline="Couldn't make your post because: <code>" + msg + "</code>",
                 page="<p>You may want to review the <a href='/rules'>rules</a>.</p>"
             )
     else:
