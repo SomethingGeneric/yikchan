@@ -1,3 +1,4 @@
 flask
 black
 gunicorn
+better_profanity
