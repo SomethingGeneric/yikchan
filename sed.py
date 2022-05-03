@@ -1,8 +1,9 @@
 import os, subprocess
 
-conf = input("Desired config file: ")
-with open(".use_theme", "w") as f:
-    f.write(conf)
+if not os.path.exists(".use_theme"):
+    conf = input("Desired config file: ")
+    with open(".use_theme", "w") as f:
+        f.write(conf)
 
 text = open("new.service").read()
 text = text.replace(
