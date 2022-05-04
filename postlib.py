@@ -82,7 +82,7 @@ class postlib:
 
         for thing in self.block:
             if thing in text.lower():
-                return (False, "Found restricted word: " + thing)
+                return (False, "Found restricted string: " + thing)
 
         if self.do_censor:
             print("Censoring is enabled, checking")
