@@ -2,3 +2,4 @@ flask
 black
 gunicorn
 better_profanity
+discord-webhook

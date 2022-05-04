@@ -23,6 +23,7 @@ PRODUCT = settings.settings["PRODUCT"]
 TAGLINE = settings.settings["TAGLINE"]
 TZ_STRING = settings.settings["TZ_STRING"]
 DO_CENSOR = settings.settings["DO_CENSOR"]
+WEBHOOK = settings.settings["WEBHOOK"]
 
 ###############################################################################
 #                                                                             #
@@ -49,7 +50,9 @@ with open("static/terminal.css", "w") as f:
     f.write(css)
 
 app = Flask(__name__)
-pm = postlib(POST_DIR, TZ_STRING, DO_CENSOR)
+pm = postlib(
+    POST_DIR, TZ_STRING, DO_CENSOR, WEBHOOK, settings.settings["LK_1"], PRODUCT
+)
 
 
 @app.route("/post/<pid>", methods=["GET", "POST"])

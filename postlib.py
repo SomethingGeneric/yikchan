@@ -9,6 +9,7 @@ from random import randint
 # PyPi
 from flask import render_template
 from better_profanity import profanity
+from discord_webhook import DiscordWebhook, DiscordEmbed
 
 # Custom
 from config import settingsloader
@@ -20,6 +21,7 @@ if s != "/":
     sys.exit(1)
 
 profanity.load_censor_words_from_file("profanity_wordlist.txt")
+
 
 def checkp(p):
     if not os.path.exists(p):
@@ -56,7 +58,7 @@ def strip_tags(html):
 
 
 class postlib:
-    def __init__(self, root, tzstr, dc):
+    def __init__(self, root, tzstr, dc, webhook, prod_color=None, product=""):
 
         self.do_censor = False
         if dc == "yes":
@@ -66,6 +68,7 @@ class postlib:
 
         self.root = root
         self.tzstr = tzstr
+        self.product = product
 
         ensuredir(self.root)
 
@@ -74,9 +77,19 @@ class postlib:
             with open("forbidden.txt") as f:
                 self.block = f.read().split("\n")
 
+        self.do_webhook = False
+        if webhook != "no":
+            self.webhook_url = webhook
+            self.do_webhook = True
+
+        self.embed_color = "03b2f8"
+        if prod_color != None:
+            self.embed_color = prod_color.replace("#", "")
+
     def mkpost(self, pid, text):
 
         text = unquote(text)
+        ogt = text
 
         print("MAKING POST")
         print("Text: '" + text + "'")
@@ -89,7 +102,10 @@ class postlib:
             print("Censoring is enabled, checking")
             if profanity.contains_profanity(str(text)):
                 print("Filter found bad things")
-                return (False, "Profanity filter said: '" + profanity.censor(text, "*") + "'")
+                return (
+                    False,
+                    "Profanity filter said: '" + profanity.censor(text, "*") + "'",
+                )
 
         pid = str(pid)  # flask might int-ify it
 
@@ -109,13 +125,29 @@ class postlib:
             with open(self.root + s + pid, "a") as f:
                 f.write("--REPLY--\n" + text + "\n")
 
+        if self.do_webhook:
+            webhook = DiscordWebhook(url=self.webhook_url, rate_limit_retry=True)
+            embed = DiscordEmbed(
+                title="New post in Thread " + pid,
+                description="```"
+                + ogt
+                + "```\nSee it here: "
+                + "https://"
+                + self.product
+                + "/post/"
+                + pid,
+                color=self.embed_color,
+            )
+            webhook.add_embed(embed)
+            webhook.execute()
+
         return (True, "")
 
     def getpost(self, pid):
         pid = str(pid)
         if checkp(self.root + s + pid):
             with open(self.root + s + pid, "r") as f:
-                return f.read().replace("<script>","").replace("</script>","")
+                return f.read().replace("<script>", "").replace("</script>", "")
         else:
             return "Post not found"
 
@@ -152,7 +184,7 @@ class postlib:
 
     def mkpostid(self):
         mp = len(os.listdir(self.root)) + 1
-        return randint(mp, mp+20)
+        return randint(mp, mp + 20)
 
 
 if __name__ == "__main__":
