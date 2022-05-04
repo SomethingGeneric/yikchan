@@ -47,6 +47,7 @@ class MLStripper(HTMLParser):
 
 
 def strip_tags(html):
+    html = html.lower()
     s = MLStripper()
     s.feed(html)
     return s.get_data()
@@ -77,7 +78,7 @@ class postlib:
         print("Text: '" + text + "'")
 
         for thing in self.block:
-            if thing in text:
+            if thing in text.lower():
                 return (False, "Found restricted word: " + thing)
 
         if self.do_censor:
@@ -110,7 +111,7 @@ class postlib:
         pid = str(pid)
         if checkp(self.root + s + pid):
             with open(self.root + s + pid, "r") as f:
-                return f.read()
+                return f.read().replace("<script>","").replace("</script>","")
         else:
             return "Post not found"
 
