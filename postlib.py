@@ -4,6 +4,7 @@ from datetime import date, datetime
 from io import StringIO
 from html.parser import HTMLParser
 from urllib.parse import unquote
+from random import randint
 
 # PyPi
 from flask import render_template
@@ -147,7 +148,8 @@ class postlib:
         return html
 
     def mkpostid(self):
-        return len(os.listdir(self.root)) + 1
+        mp = len(os.listdir(self.root)) + 1
+        return randint(mp, mp+20)
 
 
 if __name__ == "__main__":
