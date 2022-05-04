@@ -142,8 +142,11 @@ class postlib:
             return html
 
     def htmlofall(self):
+        l = os.listdir(self.root)
+        l.sort(reverse=True)
+
         html = ""
-        for post in os.listdir(self.root).sort(reverse=True):
+        for post in l:
             html += self.htmlof(post) + "<hr/>"
         return html
 
