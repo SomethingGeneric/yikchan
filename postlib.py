@@ -3,6 +3,7 @@ import os, sys, subprocess
 from datetime import date, datetime
 from io import StringIO
 from html.parser import HTMLParser
+from urllib.parse import unquote
 
 # PyPi
 from flask import render_template
@@ -73,6 +74,8 @@ class postlib:
                 self.block = f.read().split("\n")
 
     def mkpost(self, pid, text):
+
+        text = unquote(text)
 
         print("MAKING POST")
         print("Text: '" + text + "'")
