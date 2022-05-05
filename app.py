@@ -58,17 +58,26 @@ pm = postlib(
 @app.route("/post/<pid>", methods=["GET", "POST"])
 def post(pid):
     if request.method == "POST":
-        status, msg = pm.mkpost(pid, request.form["post-raw"])
-        if status == True:
-            return redirect("/post/" + pid)
-        else:
+        if not pid.isnumeric():
             return render_template(
                 "page.html",
                 product=PRODUCT,
                 title="Error making post",
-                tagline="Couldn't make your post because: <code>" + msg + "</code>",
+                tagline="Couldn't make your post because: <code>Post ID is not numeric. How'd we get here?</code>",
                 page="<p>You may want to review the <a href='/rules'>rules</a>.</p>",
             )
+        else: 
+            status, msg = pm.mkpost(pid, request.form["post-raw"])
+            if status == True:
+                return redirect("/post/" + pid)
+            else:
+                return render_template(
+                    "page.html",
+                    product=PRODUCT,
+                    title="Error making post",
+                    tagline="Couldn't make your post because: <code>" + msg + "</code>",
+                    page="<p>You may want to review the <a href='/rules'>rules</a>.</p>",
+                )
     else:
         return render_template(
             "page.html",
